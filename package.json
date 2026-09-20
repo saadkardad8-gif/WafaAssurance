@@ -1,0 +1,30 @@
+{
+  "name": "ahl-al-khair-pay",
+  "version": "1.0.0",
+  "description": "Encaissements des souscripteurs — Assurances Ahl Al Khair (OTP SMS, MySQL, reçu PDF)",
+  "main": "src/server.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "admin:create": "node scripts/create-admin.js",
+    "admin:unlock": "node scripts/unlock.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "pdfkit": "^0.15.2",
+    "qrcode": "1.5"
+  }
+}
