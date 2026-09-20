@@ -4,20 +4,17 @@ const path = require('path');
 // Le fichier .env est cherché à la racine du projet, quel que soit le dossier d'où la commande est lancée.
 const ROOT = path.join(__dirname, '..');
 const ENV_FILE = path.join(ROOT, '.env');
-if (!fs.existsSync(ENV_FILE)) {
-  const hint = fs.existsSync(ENV_FILE + '.txt')
-    ? 'Un fichier ".env.txt" existe : Windows a ajouté ".txt". Renommez-le exactement en ".env".'
-    : 'Lancez d\'abord :  npm run setup   (ou copiez .env.example en .env et remplissez-le).';
-  console.error(`\n❌ Fichier .env introuvable dans ${ROOT}\n   ${hint}\n`);
-  process.exit(1);
-}
-require('dotenv').config({ path: ENV_FILE });
+// En production, les plateformes comme Render fournissent les variables directement.
+if (fs.existsSync(ENV_FILE)) require('dotenv').config({ path: ENV_FILE });
 
 const env = process.env;
 const isProd = env.NODE_ENV === 'production';
 
 function required(name) {
-  if (!env[name]) { console.error(`\n❌ Variable manquante dans .env : ${name}\n   Ouvrez le fichier .env et renseignez ${name}= (ou relancez : npm run setup)\n`); process.exit(1); }
+  if (!env[name]) {
+    console.error(`\n❌ Variable d'environnement manquante : ${name}\n   Ajoutez ${name} dans le fichier .env ou dans les variables d'environnement de votre hébergeur.\n`);
+    process.exit(1);
+  }
   return env[name];
 }
 
